@@ -1,16 +1,3 @@
-# koa-hostname
-koa hostname 路由，可以结合 koa-router 完成 hostname + path 的路由
-
-# useage & test
-修改本地 host 配置
-
-```host
-127.0.0.1 a.com x.a.com y.a.com b.com c.com
-```
-
-结合 ```koa-router``` 可以完成 hostname + path 路由
-
-```typescript
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import { createReadStream } from 'fs';
@@ -58,11 +45,3 @@ app.use(async ctx => {
 });
 
 app.listen(8080);
-```
-访问：
-- a.com，x.a.com，y.a.com 渲染页面 a
-- b.com 渲染页面 b
-- c.com 渲染页面 c
-- a.com/api，x.a.com/api，y.a.com/api 路由到 a 的接口 /api
-- b.com/api 路由到 b 接口 /api
-- c.com/api 路由到 c 接口 /api

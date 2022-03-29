@@ -1,0 +1,34 @@
+import * as compose from 'koa-compose';
+import * as minimatch from 'minimatch';
+import type { Context, Next, Middleware } from 'koa';
+
+class HostnameRouter {
+  private pathDeps = new Map<string | string[], Middleware<any, any>[]>();
+
+  middleware() {
+    return async (context: Context, next: Next) => {
+      const { hostname } = context;
+      const matchedKey = Array.from(this.pathDeps.keys()).find(path => {
+        let matched: boolean;
+        if (Array.isArray(path)) {
+          matched = path.find(p => minimatch(hostname, p)) ? true : false;
+        } else {
+          matched = minimatch(hostname, path);
+        }
+        return matched;
+      });
+
+      if (matchedKey) {
+        return compose(this.pathDeps.get(matchedKey))(context, next);
+      } else {
+        return await next();
+      }
+    }
+  }
+
+  use<T = {}, U = {}>(path: string | string[], ...middlewares: Middleware<T, U>[]) {
+    this.pathDeps.set(path, middlewares);
+  }
+}
+
+export default HostnameRouter;

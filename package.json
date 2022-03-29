@@ -1,0 +1,31 @@
+{
+  "name": "koa-hostname",
+  "version": "1.0.0",
+  "description": "koa hostname router",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --config nodemon.json --exec \"ts-node\" test/index.ts",
+    "build": "tsc"
+  },
+  "keywords": [
+    "koa",
+    "koa-hostname",
+    "koa-hostname-router"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa-compose": "^4.1.0",
+    "minimatch": "^5.0.1"
+  },
+  "devDependencies": {
+    "koa": "^2.13.4",
+    "koa-router": "^10.1.1",
+    "@types/koa": "^2.13.4",
+    "@types/koa-compose": "^3.2.5",
+    "@types/koa-router": "^7.4.4",
+    "typescript": "^4.6.3",
+    "nodemon": "^2.0.15",
+    "ts-node": "^10.7.0"
+  }
+}
