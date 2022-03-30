@@ -8,6 +8,6 @@
   },
   "watch": [
     "src/**/*.ts",
-    "test/**/*.ts"
+    "serve/**/*.ts"
   ]
 }

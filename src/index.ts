@@ -1,5 +1,5 @@
-import * as compose from 'koa-compose';
-import * as minimatch from 'minimatch';
+import compose from 'koa-compose';
+import minimatch from 'minimatch';
 import type { Context, Next, Middleware } from 'koa';
 
 class HostnameRouter {
@@ -32,3 +32,4 @@ class HostnameRouter {
 }
 
 export default HostnameRouter;
+module.exports = HostnameRouter;
