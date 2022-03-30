@@ -1,14 +1,85 @@
 # koa-hostname
-koa hostname 路由，可以结合 koa-router 完成 hostname + path 的路由
+koa hostname 路由，支持 middleware 配置，主要用于单应用对接多域名（多业务线）
 
-# useage & test
-修改本地 host 配置
+中间件机制可以结合 koa-router 完成 hostname + path 的路由
+
+# useage
+测试时需要修改本地 host 配置
 
 ```host
 127.0.0.1 a.com x.a.com y.a.com b.com c.com
 ```
 
-结合 ```koa-router``` 可以完成 hostname + path 路由
+## basic
+基础用法
+```typescript
+import Koa from 'koa';
+
+import HRouter from '../src';
+
+const app = new Koa();
+const host = new HRouter();
+
+host.use('a.com', ctx => ctx.body = 'a.com');
+
+host.use('b.com', ctx => ctx.body = 'b.com');
+
+app.use(host.middleware());
+
+app.use(async ctx => {
+  ctx.body = '404';
+});
+
+app.listen(8080);
+```
+通过
+```bash
+curl http://a.com:8080
+curl http://b.com:8080
+curl http://c.com:8080
+```
+可以得到返回
+```bash
+a.com
+b.com
+404
+```
+
+## glob 匹配
+支持 glob 语法匹配
+```typescript
+import Koa from 'koa';
+
+import HRouter from '../src';
+
+const app = new Koa();
+const host = new HRouter();
+
+host.use(['a.com', '*.a.com'], ctx => ctx.body = 'a.com');
+
+app.use(host.middleware());
+
+app.use(async ctx => {
+  ctx.body = '404 not found';
+});
+
+app.listen(8080);
+```
+通过
+```bash
+curl http://a.com:8080
+curl http://x.a.com:8080
+curl http://y.a.com:8080
+```
+可以得到返回
+```bash
+a.com
+a.com
+a.com
+```
+
+## 结合 koa-router
+结合 ```koa-router```，以及 koa 的中间件机制，可以完成完整的 hostname + path 路由匹配
 
 ```typescript
 import * as Koa from 'koa';

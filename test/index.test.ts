@@ -18,8 +18,13 @@ describe('module compatible.', () => {
   });
 });
 
+/**
+ * host
+ * 127.0.0.1 a.com x.a.com y.a.com
+ * 127.0.0.1 b.com x.b.com y.b.com
+ * 127.0.0.1 c.com
+ */
 describe('hostname router basic functions.', () => {
-  
   const app = new Koa();
   const hRtouer = new HRouter();
   const pRouter = new Router();
