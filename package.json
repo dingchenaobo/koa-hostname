@@ -12,8 +12,12 @@
     "koa-hostname",
     "koa-hostname-router"
   ],
-  "author": "",
+  "author": "dingchen",
   "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dingchenaobo/koa-hostname.git"
+  },
   "dependencies": {
     "koa-compose": "^4.1.0",
     "minimatch": "^5.0.1"
