@@ -7,13 +7,13 @@ class HostnameRouter {
 
   middleware() {
     return async (context: Context, next: Next) => {
-      const { hostname } = context;
+      const { hostname, path: pathname } = context;
       const matchedKey = Array.from(this.pathDeps.keys()).find(path => {
         let matched: boolean;
         if (Array.isArray(path)) {
-          matched = path.find(p => minimatch(hostname, p)) ? true : false;
+          matched = path.find(p => minimatch(`${hostname}${pathname}`, p)) ? true : false;
         } else {
-          matched = minimatch(hostname, path);
+          matched = minimatch(`${hostname}${pathname}`, path);
         }
         return matched;
       });
