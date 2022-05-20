@@ -1,6 +1,6 @@
 {
   "name": "koa-hostname",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "koa hostname router. glob match. middleware.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
