@@ -11,37 +11,38 @@ const renderPage = (ctx: Koa.Context, pageName: string) => {
   ctx.body = createReadStream(__dirname + '/' + pageName + '.html');
 }
 
-const routerA = new Router();
-routerA
-  .get('/', ctx => renderPage(ctx, 'a'))
-  .get('/api', ctx => ctx.body = 'hello a');
+// domain A
 host.use(['a.com', '*.a.com'], async (ctx, next) => {
   console.log('site a.');
   await next();
-}, routerA.routes());
+}, new Router()
+  .get('/', ctx => renderPage(ctx, 'a'))
+  .get('/api', ctx => ctx.body = 'hello a')
+  .routes()
+);
 
-const routerB = new Router();
-routerB
-  .get('/', ctx => renderPage(ctx, 'b'))
-  .get('/api', ctx => ctx.body = 'hello b.');
+// domain B
 host.use('b.com', async (ctx, next) => {
   console.log('site b.');
   await next();
-}, routerB.routes());
+}, new Router()
+  .get('/', ctx => renderPage(ctx, 'b'))
+  .get('/api', ctx => ctx.body = 'hello b.')
+  .routes()
+);
 
-const routerC = new Router();
-routerC
-  .get('/', ctx => renderPage(ctx, 'c'))
-  .get('/api', ctx => ctx.body = 'hello c.');
+// domain C
 host.use('c.com', async (ctx, next) => {
   console.log('site c.');
   await next();
-}, routerC.routes());
+}, new Router()
+  .get('/', ctx => renderPage(ctx, 'c'))
+  .get('/api', ctx => ctx.body = 'hello c.')
+  .routes()
+);
 
 app.use(host.middleware());
 
-app.use(async ctx => {
-  ctx.body = '404 not found';
-});
+app.use(async ctx => (ctx.body = '404 not found'));
 
 app.listen(8080);

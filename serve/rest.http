@@ -1,0 +1,7 @@
+GET http://a.com:8080
+### 
+GET http://a.a.com:8080
+###
+GET http://b.com:8080
+###
+GET http://b.com:8080/api
